@@ -1,4 +1,16 @@
 <h1>Home</h1>
 
-<%= link_to 'Sign up', new_user_registration_path %>
-<%= link_to 'Sign in', new_user_session_path %>
+<% if user_signed_in? %>
+  <p>
+    You are signed in as <%= current_user.email %>.
+    <%= form_with url: destroy_user_session_path, method: :delete do |f| %>
+      <%= f.submit 'Sign out' %>
+    <% end %>
+  </p>
+<% else %>
+  <p>You are not signed in. You can:</p>
+  <ul>
+    <li><%= link_to 'Sign in', new_user_session_path %></li>
+    <li><%= link_to 'Sign up', new_user_registration_path %></li>
+  </ul>
+<% end %>
